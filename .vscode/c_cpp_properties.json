@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/keil5/ARM/ARMCC/**",
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "D:/keil5/ARM/ARMCC/**",
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

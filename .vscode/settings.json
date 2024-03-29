@@ -1,0 +1,42 @@
+{
+    "search.exclude": {
+        "**/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h": true,
+    },
+    "files.exclude": {
+        "**/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h": true,
+    },
+    "files.associations": {
+        "string": "c",
+        "vector": "c",
+        "tx_api.h": "c",
+        "cmb_en_us.h": "c",
+        "lct_uimain.h": "c",
+        "cm_backtrace.h": "c",
+        "global.h": "c",
+        "ux_usb.h": "c",
+        "tx_sd.h": "c",
+        "lctbutton.h": "c",
+        "lctlvgl_disp.h": "c",
+        "lct_programmer_timer.h": "c",
+        "lv_textarea.h": "c",
+        "tx_rtc.h": "c",
+        "memory": "c",
+        "tx_pool.h": "c",
+        "tx_norflash.h": "c",
+        "stdint.h": "c",
+        "fx_port.h": "c",
+        "tx_u2i.h": "c",
+        "lctlogfile.h": "c",
+        "stdio.h": "c",
+        "tx_log.h": "c",
+        "lctlogalarm.h": "c",
+        "lvgl.h": "c",
+        "lctparam.h": "c",
+        "lctlog.h": "c",
+        "deque": "c",
+        "queue": "c",
+        "janpatch_mcu_config.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+}
+    

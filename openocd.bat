@@ -1,0 +1,1 @@
+openocd -f interface/cmsis-dap.cfg -f target/stm32f1x.cfg  -c init -c halt -c "flash write_image erase ./janpatch/demo/blinky-k64f.patch 0x08030000" -c reset -c shutdown
