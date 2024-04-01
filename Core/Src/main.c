@@ -166,15 +166,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
   uint8_t ret = 0;
   ret = janpatch_mcu_cinfig_fota(&janpatch_mcu_config, &source, &patch, &target);
-  if(ret == 0){
-    uint8_t val = 0;
-    for(int i = 0; i < target.file_seek; i++) {
-      Flash_Read(0x08020000 + i, &val, 1);
-        if(i % 2048 == 0) printf("\r\n");
-      if(i % 16 == 0) printf("\r\n%08X: ", i); 
-      printf("%02X ", val);
-    }
-  }
+  // if(ret == 0){
+  //   uint8_t val = 0;
+  //   for(int i = 0; i < target.file_seek; i++) {
+  //     Flash_Read(0x08020000 + i, &val, 1);
+  //       if(i % 2048 == 0) printf("\r\n");
+  //     if(i % 16 == 0) printf("\r\n%08X: ", i); 
+  //     printf("%02X ", val);
+  //   }
+  // }
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
