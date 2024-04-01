@@ -5,7 +5,7 @@ janpatch源码:https://github.com/janjongboom/janpatch
 
 ## Janpatch 差分算法
 
-    这是一个可供MCU差分升级算法，在PC中可使用jdiff进行补丁生成，单片机里可使用此算法对旧程序打补丁生成新程序。
+* 这是一个可供MCU差分升级算法，在PC中可使用jdiff进行补丁生成，单片机里可使用此算法对旧程序打补丁生成新程序。
 janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，非常适合在MCU上使用。默认扇区为2KB，可在janpatch_mcu_config.h
 中修改如下宏定义
 
@@ -13,7 +13,7 @@ janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，
     #define JANPATCH_MCU_CONFIG_SECTOR_SIZE         (2048)
 ```
 
-    janpatch_mcu_config文件是专门封装给MCU使用的，原先的janpatch代码是Linux代码，读写接口用的标准文件接口，经过封装后，只需简单的配置即可进行差分升级。下面为janpatch使用例子：
+* janpatch_mcu_config文件是专门封装给MCU使用的，原先的janpatch代码是Linux代码，读写接口用的标准文件接口，经过封装后，只需简单的配置即可进行差分升级。下面为janpatch使用例子：
 
 ```
     /* 旧代码文件描述 （janpatch\demo\blinky-k64f-old.bin） */
@@ -45,11 +45,14 @@ janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，
 
 ```
 
-    若Flash过小并RAM有冗余,可以在janpatch_mcu_config.h使能如下宏定义：
+* 若Flash过小并RAM有冗余,可以在janpatch_mcu_config.h使能如下宏定义：
+
 ```
 #define JANPATCH_MCU_CONFIG_WINDOW_ENABLE
 ```
-    此时target地址与source地址可以相同，但会使用额外RAM,并且差分新程序与差分旧程序相差不能超过额外分配大小的RAM，额外使用RAM由janpatch_mcu_config.h如下宏定义：
+
+* 此时target地址与source地址可以相同，但会使用额外RAM,并且差分新程序与差分旧程序相差不能超过额外分配大小的RAM，额外使用RAM由janpatch_mcu_config.h如下宏定义：
+
 ```
 #define JANPATCH_MCU_CONFIG_WINDOW_SIZE         (20 * 1024)
 ```
