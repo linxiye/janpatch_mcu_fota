@@ -4,7 +4,7 @@
 #include "stdio.h"
 #include "stdint.h"
 
-#define JANPATCH_MCU_CONFIG_WINDOW_ENABLE
+//#define JANPATCH_MCU_CONFIG_WINDOW_ENABLE
 
 #define JANPATCH_MCU_CONFIG_SECTOR_SIZE         (2048)
 #define JANPATCH_MCU_CONFIG_WINDOW_SIZE         (20 * 1024)
@@ -23,6 +23,12 @@ typedef enum {
     JANPATCH_FILE_PATCH,
     JANPATCH_FILE_TARGET,
 }janpatch_file_type;
+
+typedef enum{
+    Crc_Start = 0x00,
+    Crc_Middle = 0x01,
+    Crc_End = 0x02,
+}Crc_Type;
 
 typedef struct janpatch_file {
 	janpatch_file_type  file_type;

@@ -24,7 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-
+#define FOTA_TARGET_ADDRESS 0x08010000
 uint32_t Flash_Read(uint32_t address, uint8_t *data, uint32_t length)
 {
     while(length--)
@@ -84,16 +84,16 @@ uint32_t Flash_Write(uint32_t address, uint8_t *data, uint32_t length)
 
 static janpatch_file_t source = {
   .file_address = 0x08020000,
-  .file_size = 47352,
+  // .file_size = 47352,
 };
 
 static janpatch_file_t patch = {
   .file_address = 0x08030000,
-  .file_size = 8580,
+  // .file_size = 8580,
 };
 
 static janpatch_file_t target = {
-  .file_address = 0x08020000,
+  .file_address = FOTA_TARGET_ADDRESS,
   .file_size = 64 * 1024,
 };
 
@@ -169,7 +169,7 @@ int main(void)
   // if(ret == 0){
   //   uint8_t val = 0;
   //   for(int i = 0; i < target.file_seek; i++) {
-  //     Flash_Read(0x08020000 + i, &val, 1);
+  //     Flash_Read(FOTA_TARGET_ADDRESS + i, &val, 1);
   //       if(i % 2048 == 0) printf("\r\n");
   //     if(i % 16 == 0) printf("\r\n%08X: ", i); 
   //     printf("%02X ", val);
