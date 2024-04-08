@@ -1,7 +1,6 @@
 # janpatch_mcu_fota
 
-janpatch源码:https://github.com/janjongboom/janpatch
-
+    本代码是janpatch在MCU使用的Demo例程，janpatch源码:https://github.com/janjongboom/janpatch
 
 ## Janpatch 差分算法
 
@@ -56,3 +55,5 @@ janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，
 ```
 #define JANPATCH_MCU_CONFIG_WINDOW_SIZE         (20 * 1024)
 ```
+
+* 添加CRC检验内容，原本的janpatch只是单纯使用jdiff的补丁包生成新程序而已，并不会校验文件完整性，很容易导致补丁包使用其他旧程序与新程序生成的，设备端旧代码打上补丁包后发现程序运行不了，因此这里我添加了文件CRC校验。上位机在jdiff补丁包基础上加上校验头部信息，保证MCU打上补丁后程序完整。上位机源码:https://github.com/linxiye/janpatch_fota
