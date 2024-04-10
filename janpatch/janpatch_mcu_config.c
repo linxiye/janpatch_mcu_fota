@@ -1,7 +1,7 @@
 #include "janpatch.h"
 
 struct janpatch_mcu_dev{
-    uint8_t check_file;
+    uint32_t check_file;
     uint8_t source_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
     uint8_t patch_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
     uint8_t target_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
