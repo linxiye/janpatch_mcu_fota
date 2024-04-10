@@ -2,11 +2,11 @@
 
 struct janpatch_mcu_dev{
     uint32_t check_file;
-    uint8_t source_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
-    uint8_t patch_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
-    uint8_t target_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE];
+    uint32_t source_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE / 4];
+    uint32_t patch_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE / 4];
+    uint32_t target_buffer[JANPATCH_MCU_CONFIG_SECTOR_SIZE / 4];
 #ifdef JANPATCH_MCU_CONFIG_WINDOW_ENABLE
-    uint8_t windows_ram[JANPATCH_MCU_CONFIG_WINDOW_SIZE];
+    uint32_t windows_ram[JANPATCH_MCU_CONFIG_WINDOW_SIZE / 4];
     uint32_t windows_ram_used_len;
     JANPATCH_STREAM *target_file; 
     uint32_t windows_flash_write_addr;
