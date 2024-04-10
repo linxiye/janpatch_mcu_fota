@@ -215,11 +215,11 @@ int janpatch_mcu_cinfig_fota(struct janpatch_mcu_config *config,
     source->file_type = JANPATCH_FILE_SOURCE;
     patch->file_type = JANPATCH_FILE_PATCH;
     target->file_type = JANPATCH_FILE_TARGET;
-    ctx.source_buffer.buffer = dev.source_buffer;
+    ctx.source_buffer.buffer = (uint8_t *)dev.source_buffer;
     ctx.source_buffer.size = sizeof(dev.source_buffer);
-    ctx.patch_buffer.buffer = dev.patch_buffer;
+    ctx.patch_buffer.buffer = (uint8_t *)dev.patch_buffer;
     ctx.patch_buffer.size = sizeof(dev.patch_buffer);
-    ctx.target_buffer.buffer = dev.target_buffer;
+    ctx.target_buffer.buffer = (uint8_t *)dev.target_buffer;
     ctx.target_buffer.size = sizeof(dev.target_buffer);
     
     /* 从patch头部获取各个文件信息 */
