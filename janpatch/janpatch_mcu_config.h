@@ -4,7 +4,7 @@
 #include "stdio.h"
 #include "stdint.h"
 
-//#define JANPATCH_MCU_CONFIG_WINDOW_ENABLE
+#define JANPATCH_MCU_CONFIG_WINDOW_ENABLE
 
 #define JANPATCH_MCU_CONFIG_SECTOR_SIZE         (2048)
 #define JANPATCH_MCU_CONFIG_WINDOW_SIZE         (20 * 1024)

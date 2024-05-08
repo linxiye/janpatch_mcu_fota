@@ -83,7 +83,7 @@ uint32_t Flash_Write(uint32_t address, uint8_t *data, uint32_t length)
 #include "janpatch.h"
 
 static janpatch_file_t source = {
-  .file_address = 0x08020000,
+  .file_address = FOTA_TARGET_ADDRESS,
   // .file_size = 47352,
 };
 

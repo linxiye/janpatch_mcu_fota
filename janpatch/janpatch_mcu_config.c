@@ -94,7 +94,7 @@ size_t ctx_fread(void *buf, size_t buf_len, size_t buf_size, JANPATCH_STREAM *p)
         {
             if(dev.windows_ram_used_len >= 2048) len = 2048;
             dev.config->flash_erase(dev.target_file->file_address + dev.windows_flash_write_addr);
-            dev.config->flash_write(dev.target_file->file_address + dev.windows_flash_write_addr, dev.windows_ram, len);
+            dev.config->flash_write(dev.target_file->file_address + dev.windows_flash_write_addr, (uint8_t *)&dev.windows_ram[0], len);
             
             dev.windows_flash_write_addr = dev.windows_flash_write_addr + len;
             dev.windows_ram_used_len = dev.windows_ram_used_len - len;
@@ -180,7 +180,7 @@ void ctx_progress(uint8_t val)
             if(dev.windows_ram_used_len >= 2048) size = 2048;
             else size = dev.windows_ram_used_len;
             dev.config->flash_erase(dev.target_file->file_address + dev.windows_flash_write_addr);
-            dev.config->flash_write(dev.target_file->file_address + dev.windows_flash_write_addr, dev.windows_ram, size);
+            dev.config->flash_write(dev.target_file->file_address + dev.windows_flash_write_addr, (uint8_t *)&dev.windows_ram[0], size);
             
             dev.windows_flash_write_addr = dev.windows_flash_write_addr + size;
             dev.windows_ram_used_len -= size;
@@ -273,9 +273,10 @@ int janpatch_mcu_cinfig_fota(struct janpatch_mcu_config *config,
         return -1;
     }
 #ifdef JANPATCH_MCU_CONFIG_WINDOW_ENABLE
-    if((target->file_seek - source->file_size) > JANPATCH_MCU_CONFIG_WINDOW_SIZE)
+		uint32_t packsize = (target->file_seek > source->file_size) ? (target->file_seek - source->file_size) : (source->file_size - target->file_seek);
+    if(packsize > JANPATCH_MCU_CONFIG_WINDOW_SIZE)
     {
-        JANPATCH_ERROR("window size is too small\r\n");
+        JANPATCH_ERROR("window size is too small %d\r\n", packsize);
         return -1;
     }
 #endif
