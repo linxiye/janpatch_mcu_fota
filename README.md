@@ -5,8 +5,8 @@
 ## Janpatch 差分算法
 
 * 这是一个可供MCU差分升级算法，在PC中可使用jdiff进行补丁生成，单片机里可使用此算法对旧程序打补丁生成新程序。
-janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，非常适合在MCU上使用。默认扇区为2KB，可在janpatch_mcu_config.h
-中修改如下宏定义
+  janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，非常适合在MCU上使用。默认扇区为2KB，可在janpatch_mcu_config.h
+  中修改如下宏定义
 
 ```
     #define JANPATCH_MCU_CONFIG_SECTOR_SIZE         (2048)
@@ -55,5 +55,7 @@ janpatch占用非常小，仅占用2.1KB Flash，最少占用 扇区*3 的RAM，
 ```
 #define JANPATCH_MCU_CONFIG_WINDOW_SIZE         (20 * 1024)
 ```
+
+* 经实际项目测试使用，开启窗口FOTA升级读取源文件时会有概率先读取文件后面的数据，让后在读文件前面的数据，这种情况就会导致源文件前面内容已经被覆盖了，在继续读取进行差分比较，导致目标文件生成异常，这里对缓存窗口大小做进一步判断，现在只能粗暴判断两次读取源文件地址差值最大不超过缓存窗口才能进行升级。ps：主要是现在还没想好怎么改。
 
 * 添加CRC检验内容，原本的janpatch只是单纯使用jdiff的补丁包生成新程序而已，并不会校验文件完整性，很容易导致补丁包使用其他旧程序与新程序生成的，设备端旧代码打上补丁包后发现程序运行不了，因此这里我添加了文件CRC校验。上位机在jdiff补丁包基础上加上校验头部信息，保证MCU打上补丁后程序完整。上位机源码:https://github.com/linxiye/JFoatTool

@@ -8,6 +8,7 @@ struct janpatch_mcu_dev{
 #ifdef JANPATCH_MCU_CONFIG_WINDOW_ENABLE
     uint32_t windows_ram[JANPATCH_MCU_CONFIG_WINDOW_SIZE / 4];
     uint32_t windows_ram_used_len;
+    uint32_t windows_ram_sublen;
     JANPATCH_STREAM *target_file; 
     uint32_t windows_flash_write_addr;
 #endif
@@ -79,17 +80,33 @@ size_t ctx_fread(void *buf, size_t buf_len, size_t buf_size, JANPATCH_STREAM *p)
 {
 	uint32_t len;
     uint32_t size = buf_len * buf_size;
+    static uint32_t last_addr = 0;
     if(p->file_seek + size > p->file_size)
       size = p->file_size - p->file_seek;
 	dev.config->flash_read(p->file_address + p->file_seek, buf, size);
 
-    if(dev.check_file == 0) return size;
+    // if(dev.check_file == 0) return size;
 
 #ifdef JANPATCH_MCU_CONFIG_WINDOW_ENABLE
 
+    if(dev.check_file == 0) 
+    {
+        if(p->file_type == JANPATCH_FILE_SOURCE)
+        {
+            if(last_addr > p->file_address + p->file_seek)
+            {
+                if(last_addr - (p->file_address + p->file_seek) > dev.windows_ram_sublen)
+                    dev.windows_ram_sublen = last_addr - (p->file_address + p->file_seek);
+            }
+            JANPATCH_DEBUG("last_addr:%#X %#X\r\n", last_addr, dev.windows_ram_sublen);
+            last_addr = p->file_address + p->file_seek;
+        }
+        return size;
+    }
+
     if(p->file_type == JANPATCH_FILE_SOURCE)
     {
-        while(p->file_seek > dev.windows_flash_write_addr &&
+        while(p->file_seek > dev.windows_flash_write_addr + dev.windows_ram_sublen &&
                 dev.windows_ram_used_len > 0)
         {
             if(dev.windows_ram_used_len >= 2048) len = 2048;
@@ -273,7 +290,13 @@ int janpatch_mcu_cinfig_fota(struct janpatch_mcu_config *config,
         return -1;
     }
 #ifdef JANPATCH_MCU_CONFIG_WINDOW_ENABLE
-		uint32_t packsize = (target->file_seek > source->file_size) ? (target->file_seek - source->file_size) : (source->file_size - target->file_seek);
+	uint32_t packsize = (target->file_seek > source->file_size) ? (target->file_seek - source->file_size) : (source->file_size - target->file_seek);
+    if(packsize > JANPATCH_MCU_CONFIG_WINDOW_SIZE)
+    {
+        JANPATCH_ERROR("window size is too small %d\r\n", packsize);
+        return -1;
+    }
+    packsize = dev.windows_ram_sublen + packsize;
     if(packsize > JANPATCH_MCU_CONFIG_WINDOW_SIZE)
     {
         JANPATCH_ERROR("window size is too small %d\r\n", packsize);
